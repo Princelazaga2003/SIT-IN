@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <center>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <div class="alert">
+                            {{ messages[0] }}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+            </center>
+            <br>
+            <center>
+                <img src="{{ url_for('static', filename='ccs.png') }}" alt="Logo" width="150" height="150">
+            <h2>Login to Your Account</h2>
+            </center>
+            <br>
+            <form method="POST">
+                <!-- Change email to idno -->
+                <label for="idno">ID Number</label>
+                <input type="text" name="idno" id="idno" required>
+
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" required>
+
+                <button type="submit">Login</button>
+            </form>
+            <br>
+            <p>Don't have an account? <a href="{{ url_for('register') }}">Register Account</a></p>
+        </div>
+    </div>
+</body>
+</html>

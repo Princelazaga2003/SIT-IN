@@ -1,0 +1,102 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="register-container">
+        <div class="register-card">
+            <h2 class="register-title">Create Your Account</h2>
+
+            <form method="POST" enctype="multipart/form-data">
+                <label for="idno">ID Number</label>
+                <input type="text" name="idno" id="idno" placeholder="Enter your ID number" 
+                    value="{{ request.form.get('idno', '') }}" required>
+
+                <label for="lastname">Last Name</label>
+                <input type="text" name="lastname" id="lastname" placeholder="Enter your last name" 
+                    value="{{ request.form.get('lastname', '') }}" required>
+
+                <label for="middlename">Middle Name (1 capital letter)</label>
+                <input type="text" name="middlename" id="middlename" placeholder="Enter your middle name" 
+                    maxlength="1" value="{{ request.form.get('middlename', '') }}" required pattern="[A-Z]">
+
+                <label for="firstname">First Name</label>
+                <input type="text" name="firstname" id="firstname" placeholder="Enter your first name" 
+                    value="{{ request.form.get('firstname', '') }}" required>
+
+                <label for="course">Course</label>
+                <select name="course" id="course" required>
+                    <option value="bsit" {% if request.form.get('course') == 'bsit' %}selected{% endif %}>BSIT</option>
+                    <option value="bscs" {% if request.form.get('course') == 'bscs' %}selected{% endif %}>BSCS</option>
+                    <option value="bsba" {% if request.form.get('course') == 'bsba' %}selected{% endif %}>BSBA</option>
+                    <option value="bsacc" {% if request.form.get('course') == 'bsacc' %}selected{% endif %}>BSAS</option>
+                    <option value="bsn" {% if request.form.get('course') == 'bsn' %}selected{% endif %}>BSN</option>
+                    <option value="bsed" {% if request.form.get('course') == 'bsed' %}selected{% endif %}>BSEd </option>
+                    <option value="bscse" {% if request.form.get('course') == 'bscse' %}selected{% endif %}>BSCSE </option>
+                </select>
+                
+                <label for="level">Level</label>
+                <select name="level" id="level" required>
+                    <option value="1" {% if request.form.get('level') == '1' %}selected{% endif %}>1</option>
+                    <option value="2" {% if request.form.get('level') == '2' %}selected{% endif %}>2</option>
+                    <option value="3" {% if request.form.get('level') == '3' %}selected{% endif %}>3</option>
+                    <option value="4" {% if request.form.get('level') == '4' %}selected{% endif %}>4</option>
+                </select>
+                
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" placeholder="Enter your email" 
+                    value="{{ request.form.get('email', '') }}" required>
+
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" placeholder="Enter your password" required>
+
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" name="confirm_password" id="confirm_password" 
+                    placeholder="Confirm your password" required>
+
+                <label for="profile_picture">Profile Picture</label>
+                <input type="file" name="profile_picture" id="profile_picture" accept="image/*" required>
+
+                <button type="submit">Register</button>
+                <br>
+                <p><center><a href="{{ url_for('login') }}">Login</a></center></p>
+            </form>
+        
+        </div>
+    </div>
+
+    <!-- Modal for Error Messages -->
+    <div id="errorModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="modalMessage"></p>
+        </div>
+    </div>
+
+    <script>
+        // Modal functionality for error messages
+        const modal = document.getElementById('errorModal');
+        const closeBtn = document.querySelector('.close');
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        document.getElementById('modalMessage').innerText = "{{ messages[0] }}";
+        modal.style.display = "block";
+        {% endif %}
+        {% endwith %}
+        closeBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // Close the modal if clicked outside the modal
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
